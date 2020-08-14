@@ -39,6 +39,9 @@ var getJSONData = function(url){
         return result;
     });
 }
+// si no estamos logueados y la pagina no es "login.html" entonces redirigir a "login.html"
+if (!sessionStorage.getItem("logged") && !(window.location.href.endsWith("login.html"))) {
+  window.location = "login.html"}
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los

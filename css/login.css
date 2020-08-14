@@ -1,0 +1,81 @@
+     
+ html, body {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100%;
+     
+     
+       }
+
+   
+ body {
+   width: 100%;
+     display: -ms-flexbox;
+     display: flex;
+     -ms-flex-align: center;
+     align-items: center;
+     padding-top: 40px;
+     padding-bottom: 40px;
+     background-color: #f5f5f5;
+       }
+   
+ .signin {
+     width: 100%;
+     max-width: 330px;
+     padding: 15px;
+     margin: auto;
+       }
+        
+        /* Nuevos estilos css para formulario */
+ div.fullcontain {
+   margin-top: 3cm;
+     width: 20cm;
+     height: 10cm;
+     background-color: rgba(199, 44, 129, 0.76);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+        }
+
+ div.container {
+     width: 20cm;
+     height: 10cm;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+         }
+  
+ img.imagen1{
+     width: 10cm;
+         }
+
+ img.backg{
+   width: 20cm;
+ }
+
+ .avatar{
+      width: 0.7cm;
+         }
+ .key{
+     width: 0.7cm;
+        }
+ .form-relleno{
+      margin: 1%;
+        }
+ .form-relleno2{
+      margin: 1%;
+        }
+ button{
+     margin: 3%;
+        }
+.text-center{
+  background-color: rgb(242, 243, 243);
+  background-image: url(../img/login.png);
+  background-size: 35%;
+  background-repeat: no-repeat;
+  background-position: top; 
+}
+.hiper{
+  color: purple;
+}
