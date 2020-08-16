@@ -6,6 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
@@ -47,12 +49,15 @@
       <!-- Paginas redirigen a "Oops" y luego nos lleva al index -->
       <span class="passw"><a class="hiper" href="Oops.html">¿Olvidaste tu contraseña?</a></span> <br>
       <span class="passw">¿No tienes una cuenta? <a class="hiper" href="Oops.html">Registrate aquí</a></span>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
     </form>
   </div>
 </div>
 
   <script src="js/init.js"></script>
   <script src="js/login.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 
 </html>
