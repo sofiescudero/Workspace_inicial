@@ -18,5 +18,16 @@ document.addEventListener("DOMContentLoaded", function(e){
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
+  var id_token = googleUser.getAuthResponse().id_token;
+  postAJAX('/server/sign-in', {id_token: id_token})
+  .then(function(user) {
+      // The user is now signed in on the server too
+      // and the user should now have a session cookie
+      // for the whole site. 
+      evento.preventDefault();
+      document.location.href = "index.html"+ user.username;
+       sessionStorage.setItem("logged") = true;
+       return true;
+  })
   
 });
