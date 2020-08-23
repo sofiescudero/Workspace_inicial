@@ -11,9 +11,6 @@ var showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
 }
 
-var hideSpinner = function(){
-  document.getElementById("spinner-wrapper").style.display = "none";
-}
 
 var getJSONData = function(url){
     var result = {};
@@ -38,11 +35,24 @@ var getJSONData = function(url){
         hideSpinner();
         return result;
     });
+    
+}
+var hideSpinner = function(){
+  document.getElementById("spinner-wrapper").style.display = "none";
 }
 // si no estamos logueados y la pagina no es "login.html" entonces redirigir a "login.html"
-if (!sessionStorage.getItem("logged") && !(window.location.href.endsWith("login.html"))) {
+if (!localStorage.getItem("logged") && !(window.location.href.endsWith("login.html"))) {
   window.location = "login.html"}
 
+
+  document.getElementById("nombreUsuario").innerHTML = localStorage.getItem("email");
+
+  function logout(){
+    event.preventDefault();
+    window.location = "login.html";
+    localStorage.removeItem("email");
+    localStorage.setItem("logged", false);
+  }
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
