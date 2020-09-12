@@ -13,6 +13,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -34,7 +35,8 @@
         <h2>Descripción del producto</h2>
         <p class="lead">Encontrarás aquí toda la información del producto seleccionado.</p>
         <p class="small alert-warning py-3"><strong>Nota: </strong>por simplicidad, cualquiera sea el producto
-          seleccionado previamente, siempre se visualizará el presente: <strong>Chevrolet Onix Joy</strong>.</p>
+          seleccionado previamente, siempre se visualizará la informacion del presente: <strong> Chevrolet Onix Joy
+          </strong>.</p>
       </div>
       <h3 id="productName"></h3>
       <hr class="my-3">
@@ -66,11 +68,33 @@
           <p id="productCategory"></p>
         </dd>
 
-        <!-- <dt>Productos relacionados</dt>
+        <dt>Productos relacionados</dt>
         <dd>
-          <p id="productRelated"></p>
-        </dd> -->
+          <div id="productRelated" style="width: 50%; float: left;"></div>
+          <div id="productRelatedDos" style="width: 50%; float: left;"></div>
+        </dd>
       </dl>
+
+      <br>
+
+      <h3 style="text-align: center; margin-top: 10%;"> Comentarios </h3>
+      <p style="text-align: justify;" id="infoDescription"></p>
+      <p id="newComment"></p>
+      <br>
+      <h4 style="text-align: center;">Añadir un comentario</h4>
+      <div id="add_comment">
+        <form id="form" action="" class="add_comment">
+          <label><strong>Usuario: </strong> <label id="usuario"></label></label><br>
+          <strong>Fecha: </strong><label id="fecha"></label> <br>
+          <label><strong>Puntuacion: </strong>
+            <input style="width: 15%;" id="score" type="number" min="1" max="5" name="score">
+          </label><br>
+          <label><strong>Comentario:</strong>
+            <textarea id="comment" name="comment"></textarea>
+          </label>
+          <br><input type="submit" value="Añadir comentario">
+        </form>
+      </div>
       <a type="button" class="btn btn-light btn-lg btn-block" href="products.html">Ver todos los productos</a>
     </div>
   </main>
