@@ -69,16 +69,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
   })
 });
 
-document.addEventListener("DOMContentLoaded", function (e) {
-  getJSONData(CART_URL).then(function (resultObj) {
-    if (resultObj.status === "ok") {
-
-      var cantidad = resultObj.data.articles[1].unitCost
-      var nuevoValor = cantidad * 42.46
-
-    }
-  })
-});
 
 function finalizada() {
   alert("Felicidades, has completado tu compra. El total es " + "UYU - " + document.getElementById("totalFinal").innerHTML)
