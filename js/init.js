@@ -5,6 +5,7 @@ const PRODUCTS_URL = "https://japdevdep.github.io/ecommerce-api/product/all.json
 const PRODUCT_INFO_URL = "https://japdevdep.github.io/ecommerce-api/product/5678.json";
 const PRODUCT_INFO_COMMENTS_URL = "https://japdevdep.github.io/ecommerce-api/product/5678-comments.json";
 const CART_INFO_URL = "https://japdevdep.github.io/ecommerce-api/cart/987.json";
+const CART_URL = "https://japdevdep.github.io/ecommerce-api/cart/654.json"
 const CART_BUY_URL = "https://japdevdep.github.io/ecommerce-api/cart/buy.json";
 
 var showSpinner = function () {
@@ -41,19 +42,22 @@ var hideSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 // si no estamos logueados y la pagina no es "login.html" entonces redirigir a "login.html"
-if (!localStorage.getItem("logged") && !(window.location.href.endsWith("login.html"))) {
+if ((!localStorage.getItem("logged")) && !(window.location.href.endsWith("login.html"))) {
   window.location = "login.html"
 }
 
-
 document.getElementById("nombreUsuario").innerHTML = localStorage.getItem("email");
 
-function logout() {
-  event.preventDefault();
-  window.location = "login.html";
-  localStorage.removeItem("email");
-  localStorage.setItem("logged", false);
-}
+document.getElementById("logout").addEventListener('click',
+  function logout(event) {
+    event.preventDefault();
+    if (!localStorage.getItem("logged") == false) {
+      localStorage.setItem("logged", false);
+      localStorage.removeItem("email");
+      window.location = "login.html";
+    }
+});
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.

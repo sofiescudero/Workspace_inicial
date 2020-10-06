@@ -26,6 +26,7 @@
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
       }
+      tr {border:2px groove black;}
     }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,21 +41,81 @@
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-      <img src="img/user.png" style="height: 0.8cm; position: absolute; right: 5.5%; top: 0%; margin: 0.2cm;"
-        alt="user">
-      <a id="nombreUsuario" class="py-2 d-none d-md-inline-block" href="my-profile.html"></a>
+      <div style="margin-right: 5%;" class="dropdown">
+        <button style="height: 1cm;" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="img/user.png" style="height: 1cm; position: fixed ; right: 3.4cm; top: 0.1cm;" alt="user">
+          <a style="margin-top: -3cm;" id="nombreUsuario" class="py-2 d-none d-md-inline-block"></a>
+        </button>
+        <div class="dropdown-menu" style="text-align: center;" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="my-profile.html"> Mi perfil</a>
+          <a class="dropdown-item" href="cart.html">Mi carrito</a>
+          <button id="logout" style="align-content: center;" class="py-2 d-none d-md-inline-block">
+            Cerrar sesion</button>
+        </div>
+      </div>
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 11/10/2020) y Entrega 6 (Fecha de entrega:
-        25/10/2020).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
+  <div class="text-center p-4">
+    <h2>Mi carrito</h2>
+    <p class="lead">Verás aquí todos los productos en tu carrito.</p>
   </div>
+  <table align="center" style="width:80%; margin: auto;">
+    <colgroup>
+      <col width="1">
+      <col>
+      <col>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr style="font-size: 20px; text-align: center;">
+        <td colspan="2">Producto</td>
+        <td>Cantidad</td>
+        <td>Valor unitario</td>
+        <td>Valor total</td>
+      </tr>
+    </thead>
+    <tbody id="cartItems">
+
+    </tbody>
+  </table>
+  <hr>
+  <table
+    style="background-color: rgb(243, 210, 207); margin: auto; width: 8cm; text-align: center; border:2px groove black;">
+    <tr>
+      <td>Envío:</td>
+      <td>Gratis</td>
+    </tr>
+    <tr>
+      <td>Tarifa:</td>
+      <td>UYU - <label id="tarifa"></label></td>
+    </tr>
+    <tr>
+      <td>Empaque y Manejo:</td>
+      <td>UYU - <label id="empaque"></label></td>
+    </tr>
+    <tr>
+      <td>Subtotal:</td>
+      <td id="subtotal"></td>
+    </tr>
+    <tr>
+      <td>Total:</td>
+      <td id="totalFinal"></td>
+    </tr>
+  </table>
+  <button onclick="finalizada()" style="display:block;  margin-left: auto;   margin-right: auto;   margin-top: 0.5cm;" type="submit">Finalizar compra</button>
+
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -65,7 +126,6 @@
   </div>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>

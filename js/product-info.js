@@ -1,28 +1,4 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-
 var product = {};
-
-function showImagesGallery(array) {
-
-    let htmlContentToAppend = "";
-
-    for (let i = 0; i < array.length; i++) {
-        let imageSrc = array[i];
-
-        htmlContentToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
-            </div>
-        </div>
-        `
-
-        document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
-    }
-}
-
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -44,15 +20,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
             productCostCurrencyHTML.innerHTML = product.currency + " - " + product.cost;
             productSoldCountHTML.innerHTML = product.soldCount;
             productCategoryHTML.innerHTML = product.category;
-
-            //Muestro las imagenes en forma de galería
-            showImagesGallery(product.images);
+            sessionStorage.setItem("relacionados", JSON.stringify(resultObj.data.relatedProducts));
         }
     });
 });
 
 var visualScore = "";
 var info = {};
+var element = {};
 
 document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (resultObj) {
@@ -80,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 <hr style="border-top: 4px dotted pink;" />
                 `
                 visualScore = ``
-                console.log(element)
             }
             function stars(vacias, llenas) {
                 for (let j = 0; j < llenas; j++) {
@@ -100,13 +74,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 });
 
-
-document.getElementById("usuario").innerHTML = localStorage.getItem("email")
-var f = new Date();
-
-document.getElementById("fecha").innerHTML = f
-
-
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -118,62 +85,108 @@ function getQueryVariable(variable) {
     }
     return (false);
 }
-
-
-
-
+//muestro productos relacionados mediante informacion guardada en sessionStorage
 var related = {};
 document.addEventListener("DOMContentLoaded", function (e) {
     getJSONData(PRODUCTS_URL).then(function (resultObj) {
+        var relacionados = sessionStorage.getItem("relacionados");
+        relacionados = JSON.parse(relacionados)
+        console.log(relacionados);
+        
+
         if (resultObj.status === "ok") {
             related = resultObj.data;
             let relatedCar = document.getElementById("productRelated");
-            relatedCar.innerHTML += `
-            <a href="product-info.html?product=`+ related[1].name + `" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + related[1].imgSrc + `" alt="` + related[1].description + `" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ related[1].name + ` - ` + related[1].currency + related[1].cost + `</h4>
-                           
-                            <small class="text-muted">` + related[1].soldCount + ` artículos</small>
-                        </div>
-                        <p class="mb-1">` + related[1].description + `</p>
-                    </div>
-                </div>
-            </a>
-            `
-        }
-    });
-});
+            for (let i = 0; i < relacionados.length; i++) {
 
-var relatedDos = {};
-document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(PRODUCTS_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            relatedDos = resultObj.data;
-            let relatedCarDos = document.getElementById("productRelatedDos");
-            relatedCarDos.innerHTML += `
-            <a href="product-info.html?product=`+ relatedDos[3].name + `" class="list-group-item list-group-item-action">
+                relatedCar.innerHTML += `
+            <a href="product-info.html?product=`+ related[relacionados[i]].name + `" class="list-group-item list-group-item-action">
                 <div class="row">
                     <div class="col-3">
-                        <img src="` + relatedDos[3].imgSrc + `" alt="` + relatedDos[3].description + `" class="img-thumbnail">
+                        <img src="` + related[i].imgSrc + `" alt="` + related[relacionados[i]].description + `" class="img-thumbnail">
                     </div>
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ relatedDos[3].name + ` - ` + relatedDos[3].currency + relatedDos[3].cost + `</h4>
+                            <h4 class="mb-1">`+ related[i].name + ` - ` + related[relacionados[i]].currency + related[relacionados[i]].cost + `</h4>
                            
-                            <small class="text-muted">` + relatedDos[3].soldCount + ` artículos</small>
+                            <small class="text-muted">` + related[relacionados[i]].soldCount + ` artículos</small>
                         </div>
-                        <p class="mb-1">` + relatedDos[3].description + `</p>
+                        <p class="mb-1">` + related[relacionados[i]].description + `</p>
                     </div>
                 </div>
             </a>
             `
+            }
         }
     });
 });
 
 
+//fecha
+var fecha = new Date;
+var year = fecha.getFullYear();
+var month = fecha.getMonth() + 1;
+if (month < 10) {
+    month = "0" + month;
+}
+var day = fecha.getDate();
+if (day < 10) {
+    day = "0" + day
+}
+var hora = fecha.getHours()
+var minutos = fecha.getMinutes()
+var segundos = fecha.getSeconds();
+fecha = year + "-" + month + "-" + day + " " + hora + ":" + minutos + ":" + segundos;
+document.getElementById("fecha").innerHTML = fecha
+
+//nombre introducido por el usuario al iniciar sesion
+var username = localStorage.getItem("email");
+document.getElementById("usuario").innerHTML = username;
+
+
+// puntuacion
+$(document).ready(function () {
+    // Check Radio-box
+    $(".rating input:radio").attr("checked", false);
+
+    $('.rating input').click(function () {
+        $(".rating span").removeClass('checked');
+        $(this).parent().addClass('checked');
+    });
+
+    $('input:radio').change(
+        function () {
+            var userRating = this.value;
+            document.getElementById("puntuacion").innerHTML = userRating
+        });
+});
+
+// Imprimimos nuevo comentario
+
+document.getElementById("nuevoComentario").addEventListener('click', (event) => {
+    //nuevo comentario info
+    var comentario = document.getElementById("comment").value;
+    
+             userRating = document.getElementById("puntuacion").innerHTML
+
+            for (let j = 0; j < userRating; j++) {
+                visualScore = visualScore + `<span class="fa fa-star checked"></span>`
+            }
+
+            for (let j = 0; j < 5 - userRating; j++) {
+                visualScore = visualScore + `<span class="fa fa-star"></span>`
+
+            }
+            
+            
+
+                document.getElementById("infoDescription").innerHTML += `
+    <br />
+    <p><strong>Usuario: </strong>  ${username} \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 <strong> Fecha: </strong> ${fecha}</p>
+    <p><strong>Puntuacion: </strong> \xa0\xa0\  ${userRating} \xa0\xa0\ ` + visualScore + ` </p>
+    <p><strong>Comentario: </strong> ${comentario}</p>
+    <br />
+    <hr style="border-top: 4px dotted pink;" />
+    `
+                visualScore = ``
+            });
