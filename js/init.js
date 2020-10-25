@@ -52,11 +52,19 @@ document.getElementById("logout").addEventListener('click',
   function logout(event) {
     event.preventDefault();
     if (!localStorage.getItem("logged") == false) {
+      var cookies = document.cookie.split(";");
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
       localStorage.setItem("logged", false);
       localStorage.removeItem("email");
       window.location = "login.html";
     }
-});
+  });
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
