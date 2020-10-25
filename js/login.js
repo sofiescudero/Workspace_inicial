@@ -10,6 +10,7 @@ if (window.location == "login.html") {
 document.addEventListener("DOMContentLoaded", function (e) {
     document.getElementById("form1").addEventListener("submit", (evento) => {
         evento.preventDefault();
+        localStorage.setItem("logged", false);
         var inputEmail = document.getElementById("email");
         localStorage.setItem("email", inputEmail.value);
         location.href = "index.html";
@@ -29,24 +30,12 @@ const appStart = function () {
 };
 
 function onSignIn(googleUser) {
-
+    localStorage.setItem("logged", false);
     // Useful data for your client-side scripts:
     profile = googleUser.getBasicProfile();
-
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-    showSidebarMessage('Welcome ' + profile.getGivenName() + '!');
-    showSidebarMessage('Your email ' + profile.getEmail() + '!');
-
-    // The ID token you need to pass to your backend:
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-
-    window.location.replace(window.location.origin + '/login?username=' + profile.getEmail());
-
+    var inputEmail = profile.getName()
+    localStorage.setItem("email", inputEmail);
+    location.href = "index.html";
+    localStorage.setItem("logged", true);
 }
 
