@@ -29,7 +29,6 @@ const appStart = function () {
 };
 
 function onSignIn(googleUser) {
-    $("#signInId").hide();
 
     // Useful data for your client-side scripts:
     profile = googleUser.getBasicProfile();
