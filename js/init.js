@@ -52,6 +52,9 @@ document.getElementById("logout").addEventListener('click',
   function logout(event) {
     event.preventDefault();
     if (!localStorage.getItem("logged") == false) {
+      localStorage.setItem("logged", false);
+      localStorage.removeItem("email");
+      window.location = "login.html";
       var cookies = document.cookie.split(";");
 
       for (var i = 0; i < cookies.length; i++) {
@@ -60,9 +63,6 @@ document.getElementById("logout").addEventListener('click',
         var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
       }
-      localStorage.setItem("logged", false);
-      localStorage.removeItem("email");
-      window.location = "login.html";
     }
   });
 
