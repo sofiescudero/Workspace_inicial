@@ -52,6 +52,9 @@ document.getElementById("logout").addEventListener('click',
   function logout(event) {
     event.preventDefault();
     if (!localStorage.getItem("logged") == false) {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++)
+        eraseCookie(cookies[i].split("=")[0]);
       localStorage.setItem("logged", false);
       localStorage.removeItem("email");
       window.location = "login.html";
@@ -63,12 +66,3 @@ document.getElementById("logout").addEventListener('click',
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function (e) {
 });
-
-var cookies = document.cookie.split(";");
-
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      }
