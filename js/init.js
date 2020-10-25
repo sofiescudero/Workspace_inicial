@@ -52,9 +52,6 @@ document.getElementById("logout").addEventListener('click',
   function logout(event) {
     event.preventDefault();
     if (!localStorage.getItem("logged") == false) {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++)
-        eraseCookie(cookies[i].split("=")[0]);
       localStorage.setItem("logged", false);
       localStorage.removeItem("email");
       window.location = "login.html";
