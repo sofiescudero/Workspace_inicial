@@ -4,7 +4,7 @@
 
 //Al dar submit al form nos redirige a index.html y cambia el valor de logged a true
 if (window.location == "login.html") {
-localStorage.setItem("logged", false);
+    localStorage.setItem("logged", false);
 }
 
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -18,17 +18,17 @@ document.addEventListener("DOMContentLoaded", function (e) {
 });
 
 let auth2; // The Sign-In object.
-  let googleUser; // The current user.
-  let profile;
+let googleUser; // The current user.
+let profile;
 
-  /**
-   * Calls startAuth after Sign in V2 finishes setting up.
-   */
-  const appStart = function() {
+/**
+ * Calls startAuth after Sign in V2 finishes setting up.
+ */
+const appStart = function () {
     gapi.load('auth2', initSigninV2);
-  };
+};
 
-  function onSignIn(googleUser) {
+function onSignIn(googleUser) {
     $("#signInId").hide();
 
     // Useful data for your client-side scripts:
@@ -49,31 +49,5 @@ let auth2; // The Sign-In object.
 
     window.location.replace(window.location.origin + '/login?username=' + profile.getEmail());
 
-    $("#signOutId").show();
-  }
+}
 
-  function signOut() {
-    $("#signOutId").hide();
-
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function() {
-      console.log('User signed out.');
-    });
-
-    showSidebarMessage('See you!');
-    $("#signInId").show();
-  }
-
-  $(document).ready(function() {
-    console.log('ready');
-    console.log(googleUser);
-    if (googleUser && googleUser.isSignedIn()) {
-      showSidebarMessage('Welcome Back!' + profile?profile.getEmail():'');
-      $("#signInId").hide();
-      $("#signOutId").show();
-    } else {
-      showSidebarMessage('Welcome Guest!');
-      $("#signInId").show();
-      $("#signOutId").hide();
-    }
-  });
