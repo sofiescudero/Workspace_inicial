@@ -38,4 +38,3 @@ function onSignIn(googleUser) {
     location.href = "index.html";
     localStorage.setItem("logged", true);
 }
-
