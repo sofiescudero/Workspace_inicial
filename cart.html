@@ -8,7 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
-
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
@@ -26,7 +29,6 @@
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
       }
-      tr {border:2px groove black;}
     }
   </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -56,66 +58,258 @@
       </div>
     </div>
   </nav>
-  <div class="text-center p-4">
-    <h2>Mi carrito</h2>
-    <p class="lead">Verás aquí todos los productos en tu carrito.</p>
+  <div id="productosCarro" class="container">
+    <div class="text-center p-4">
+      <h2>Mi carrito</h2>
+      <p class="lead">Verás aquí todos los productos en tu carrito.</p>
+    </div>
+    <table align="center" style="width:80%; margin: auto;">
+      <colgroup>
+        <col width="1">
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+      <thead>
+        <tr style="font-size: 20px; text-align: center; border:0cm">
+          <td colspan="2">Producto</td>
+          <td>Cantidad</td>
+          <td>Valor unitario</td>
+          <td>Valor total</td>
+          <td>Eliminar</td>
+        </tr>
+      </thead>
+      <tbody id="cartItems">
+
+      </tbody>
+    </table>
+    <hr>
+    <div id="form">
+      <div>
+        <h3 class="mb-3">Tipo de envio</h3>
+        <div class="d-block my-3">
+          <div>
+            <input onchange="modificarValor(carrito);" id="premium" value="0.15" name="envio" type="radio" checked=""
+              required="">
+            <label for="goldradio">Premium
+              (2-5 días) - Costo del 15% sobre el subtotal.</label>
+          </div>
+          <div>
+            <input onchange="modificarValor(carrito);" id="express" value="0.07" name="envio" type="radio" required="">
+            <label for="premiumradio">Express
+              (5-8 días) - Costo del 7% sobre el subtotal.</label>
+          </div>
+          <div>
+            <input onchange="modificarValor(carrito);" id="standard" value="0.05" name="envio" type="radio" required="">
+            <label for="standardradio">Standard
+              (12 a 15 días) - Costo del 5% sobre el subtotal.</label>
+          </div>
+        </div>
+        <br>
+
+        <h4 class="mb-3">Direccion de envio</h4>
+        <div style="margin: auto;" class="d-block my-3">
+          <form class="needs-validation" id="buying-info">
+            <ul class="list-group mb-3">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="calle"> Calle: </label>
+                  <textarea minlength="3" class="form-control" cols="10" rows="1" name="calle" id="calle"
+                    required=""></textarea>
+                 
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="numero"> Numero de puerta: </label>
+                  <br>
+                  <input min="1" style="size: 4cm;" class="form-control" size="3cm" type="number" name="numero" id="num"
+                    required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="numero"> Esquina: </label>
+                  <br>
+                  <textarea minlength="1" class="form-control" name="esquina" id="esquina" cols="10" rows="1" required=""></textarea>
+                  
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="numero"> Pais </label>
+                  <select class="form-control" name="pais" id="pais">
+    
+                  </select>
+                 
+                </div>
+              </div>
+              <h4>Forma de pago</h4>
+              <div> <label id="formaDePago">No has seleccionado una forma de pago</label>
+                <input id="elegir" value="Elegir forma de pago" type="button"
+                  style="align-items: center; border: none; color: blue;" data-toggle="modal"
+                  data-target="#exampleModal" data-backdrop="static" data-keyboard="false">
+              </div>
+            </ul>
+            <button class="btn btn-primary btn-lg" type="submit">Comprar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mb-4">
+    <ul class="list-group mb-3">
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Tarifa:</h6>
+        </div>
+        <span class="text-muted" id="tarifa">-</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Empaque y Manejo:</h6>
+        </div>
+        <span class="text-muted" id="empaque">-</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Envio:</h6>
+        </div>
+        <span class="text-muted" id="valorEnvio">-</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">Subtotal ($): </h6>
+        </div>
+        <span class="text-muted" id="subtotal">-</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total ($): </span>
+        <strong id="totalFinal">-</strong>
+      </li>
+    </ul>
+    <hr class="mb-4">
+    <div style="text-align: center;">
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Formas de pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <article class="card">
+            <div class="card-body p-5">
+              <h5>El total a pagar es de: <label id="finalizarCompra"></label></h5>
+              <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="creditCard" data-toggle="pill" href="#nav-tab-card">
+                    <i class="fa fa-credit-card"></i>Tarjeta de crédito</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" id="bankTransfer" data-toggle="pill" href="#nav-tab-bank">
+                    <i class="fa fa-university"></i>Transferencia bancaria</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-tab-card">
+                  <form id="finalizar" role="form">
+                    <div class="form-group">
+                      <label for="username">Nombre del titular de la tarjeta </label>
+                      <input onclick="payment()" type="text" class="form-control" id="username" placeholder=""
+                        required="">
+                    </div> <!-- form-group.// -->
+                    <div class="form-group">
+                      <label for="cardNumber">N.° de tarjeta</label>
+                      <div class="input-group">
+                        <input id="cardNumber" type="text" pattern="\d*" maxlength="16" minlength="13"
+                          class="form-control" placeholder="" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text text-muted">
+                            <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
+                            <i class="fab fa-cc-mastercard"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div> <!-- form-group.// -->
+
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <label><span class="hidden-xs">Vencimiento</span> </label>
+                          <div class="input-group">
+                            <input type="number" class="form-control" min="01" max="12" placeholder="MM" name=""
+                              required>
+                            <input type="number" min="21" class="form-control" placeholder="AA" name="" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+
+                          <label data-toggle="tooltip" title=""> CVV <a href="#" class="tooltip-test"
+                              title="Codigo de seguridad"> <i class="fa fa-question-circle"></i></a></label>
+                          <input id="cvv" type="text" pattern="\d*" maxlength="3" minlength="3" class="form-control"
+                            required="">
+                        </div> <!-- form-group.// -->
+                      </div>
+                    </div> <!-- row.// -->
+                    <input id="guardarDatos" type="button" class="btn btn-secondary" value="Guardar datos">
+                    <button id="disabledButton" type="button" class="btn btn-secondary" data-dismiss="modal"
+                      disabled>Seleccionar</button>
+                  </form>
+                </div> <!-- tab-pane.// -->
+                <div class="tab-pane fade" id="nav-tab-bank">
+                  <p>Detalles de la cuenta bancaria</p>
+                  <dl class="param">
+                    <dt>BANCO: </dt>
+                    <dd> THE WORLD BANK</dd>
+                  </dl>
+                  <dl class="param">
+                    <dt>Numero de cuenta: </dt>
+                    <dd> 12345678912345</dd>
+                  </dl>
+                  <dl class="param">
+                    <dt>IBAN: </dt>
+                    <dd> 123456789</dd>
+                  </dl>
+                  <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                    eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. </p>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Seleccionar</button>
+                </div> <!-- tab-pane.// -->
+              </div> <!-- tab-content .// -->
+
+            </div> <!-- card-body.// -->
+          </article> <!-- card.// -->
+        </div>
+      </div>
+    </div>
   </div>
-  <table align="center" style="width:80%; margin: auto;">
-    <colgroup>
-      <col width="1">
-      <col>
-      <col>
-      <col>
-      <col>
-      <col>
-    </colgroup>
-    <thead>
-      <tr style="font-size: 20px; text-align: center;">
-        <td colspan="2">Producto</td>
-        <td>Cantidad</td>
-        <td>Valor unitario</td>
-        <td>Valor total</td>
-      </tr>
-    </thead>
-    <tbody id="cartItems">
-
-    </tbody>
-  </table>
-  <hr>
-  <table
-    style="background-color: rgb(243, 210, 207); margin: auto; width: 8cm; text-align: center; border:2px groove black;">
-    <tr>
-      <td>Envío:</td>
-      <td>Gratis</td>
-    </tr>
-    <tr>
-      <td>Tarifa:</td>
-      <td>UYU - <label id="tarifa"></label></td>
-    </tr>
-    <tr>
-      <td>Empaque y Manejo:</td>
-      <td>UYU - <label id="empaque"></label></td>
-    </tr>
-    <tr>
-      <td>Subtotal:</td>
-      <td id="subtotal"></td>
-    </tr>
-    <tr>
-      <td>Total:</td>
-      <td id="totalFinal"></td>
-    </tr>
-  </table>
-  <button onclick="finalizada()" style="display:block;  margin-left: auto;   margin-right: auto;   margin-top: 0.5cm;" type="submit">Finalizar compra</button>
-
-  <footer class="text-muted bg-light">
+  <footer class="text-muted">
     <div class="container">
-      <p class="float-right">
-        <a href="#">Volver arriba</a>
-      </p>
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
+  <div class="alert fade" role="alert" id="alertResult">
+    <span id="resultSpan"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="contidionsModal">
+    <div class="modal-dialog" role="document">
+    </div>
+  </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
@@ -126,6 +320,7 @@
   </div>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>
